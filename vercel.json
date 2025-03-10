@@ -11,8 +11,5 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ],
-  "env": {
-    "PATH": "/vercel/.fvm/flutter_sdk/bin:$PATH"
-  }
+  ]
 }
