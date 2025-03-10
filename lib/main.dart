@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       color: Colors.red,
       debugShowCheckedModeBanner: false,
-      title: 'Portfolio',
+      title: 'myy',
       theme: ThemeData(
         brightness: Brightness.dark,
       ), // Optional: Dark theme
