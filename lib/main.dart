@@ -55,25 +55,35 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // Background Video
-        Positioned.fill(
-          child: _controller.value.isInitialized
-              ? VideoPlayer(_controller)
-              : const Center(child: CircularProgressIndicator()),
+    return const Scaffold(
+      body: Center(
+        child: SizedBox(
+          height: 200,
+          width: 200,
+          child: Text("Versel"),
         ),
-
-        // Glassmorphic Container (Portfolio Content)
-        Positioned.fill(
-          child: _controller.value.isInitialized
-              ? AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                )
-              : const Center(child: CircularProgressIndicator()),
-        ),
-      ],
+      ),
     );
+
+    // Stack(
+    //   children: [
+    //     // Background Video
+    //     Positioned.fill(
+    //       child: _controller.value.isInitialized
+    //           ? VideoPlayer(_controller)
+    //           : const Center(child: CircularProgressIndicator()),
+    //     ),
+
+    //     // Glassmorphic Container (Portfolio Content)
+    //     Positioned.fill(
+    //       child: _controller.value.isInitialized
+    //           ? AspectRatio(
+    //               aspectRatio: _controller.value.aspectRatio,
+    //               child: VideoPlayer(_controller),
+    //             )
+    //           : const Center(child: CircularProgressIndicator()),
+    //     ),
+    //   ],
+    // );
   }
 }
