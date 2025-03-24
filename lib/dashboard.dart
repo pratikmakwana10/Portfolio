@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:port/component/dynamic_text_widget.dart';
+import 'package:port/component/text_animated.dart';
 import 'package:port/utility/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -15,135 +18,155 @@ class PortfolioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double sidebarWidth = screenWidth * 0.22;
-
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return Row(
-            children: [
-              Container(
-                width: sidebarWidth,
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
-                  border: Border(
-                      right: BorderSide(color: Colors.white.withOpacity(0.2))),
+      body: Row(
+        children: [
+          Container(
+            width: 250.w,
+            padding: EdgeInsets.all(20.w),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.1),
+              border: Border(
+                  right: BorderSide(color: Colors.white.withOpacity(0.2))),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: 80.h),
+                CircleAvatar(
+                  radius: 80.r,
+                  backgroundImage:
+                      const AssetImage('assets/images/profile.jpg'),
                 ),
-                child: Column(
+                SizedBox(height: 20.h),
+                Text(
+                  'Pratik Makwana',
+                  maxLines: 1,
+                  style: TextStyle(
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  'Flutter Developer | UI/UX Enthusiast',
+                  style: TextStyle(fontSize: 14.sp, color: Colors.white70),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 10.h),
+                _buildContactInfo('mailto:flutterdev.pratik@gmail.com',
+                    'flutterdev.pratik@gmail.com'),
+                _buildContactInfo('tel:+919978786060', '+91 9978786060'),
+                _buildContactInfo('tel:+919979896060', '+91 9979896060'),
+                SizedBox(height: 10.h),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
-                      radius: constraints.maxWidth * 0.05,
-                      backgroundImage:
-                          const AssetImage('assets/images/profile.jpg'),
-                    ),
-                    const SizedBox(height: 15),
-                    Text(
-                      'Pratik Makwana',
-                      style: TextStyle(
-                        fontSize: constraints.maxWidth * 0.02,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Flutter Developer | UI/UX Enthusiast',
-                      style: TextStyle(
-                        fontSize: constraints.maxWidth * 0.015,
-                        color: Colors.white70,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 15),
-                    _buildContactInfo('mailto:flutterdev.pratik@gmail.com',
-                        'flutterdev.pratik@gmail.com', constraints),
-                    _buildContactInfo(
-                        'tel:+919978786060', '+91 9978786060', constraints),
-                    _buildContactInfo(
-                        'tel:+919979896060', '+91 9979896060', constraints),
-                    const SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _buildSocialIcon(FontAwesomeIcons.linkedin, kLinkedIn),
-                        _buildSocialIcon(FontAwesomeIcons.github, kGithub),
-                        _buildSocialIcon(FontAwesomeIcons.medium, kMedium),
-                        _buildSocialIcon(FontAwesomeIcons.youtube, kYoutube),
-                      ],
-                    ),
-                    const SizedBox(height: 15),
+                    _buildSocialIcon(FontAwesomeIcons.linkedin,
+                        'https://linkedin.com/in/pratikmakwana10'),
+                    _buildSocialIcon(FontAwesomeIcons.github,
+                        'https://github.com/pratikmakwana10'),
+                    _buildSocialIcon(FontAwesomeIcons.medium,
+                        'https://medium.com/@pratikmakwana10'),
+                    _buildSocialIcon(FontAwesomeIcons.youtube,
+                        'https://youtube.com/@pratikmakwana10'),
                   ],
                 ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "My Skills",
-                        style: TextStyle(
-                          fontSize: constraints.maxWidth * 0.05,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: screenWidth < 600 ? 3 : 4,
-                          crossAxisSpacing: 15,
-                          mainAxisSpacing: 15,
-                          childAspectRatio: 1.1,
-                        ),
-                        itemCount: skills.length,
-                        itemBuilder: (context, index) {
-                          return SkillCard(
-                            imagePath: skills[index].imagePath,
-                            skillName: skills[index].skillName,
-                          );
-                        },
-                      ),
-                    ],
+              ],
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.all(30.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AnimatedText(text: 'My Skills'),
+                  SizedBox(height: 20.h),
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5,
+                      crossAxisSpacing: 30.w,
+                      mainAxisSpacing: 30.h,
+                      childAspectRatio: 1.0,
+                    ),
+                    itemCount: skillList.length,
+                    itemBuilder: (context, index) {
+                      return AnimatedSkillCard(
+                        imagePath: skillList[index].imagePath,
+                        skillName: skillList[index].skillName,
+                      );
+                    },
                   ),
-                ),
+                ],
               ),
-            ],
-          );
-        },
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildContactInfo(
-      String url, String text, BoxConstraints constraints) {
+  Widget _buildContactInfo(String url, String text) {
     return InkWell(
       onTap: () => _launchURL(url),
       child: Text(
         text,
         style: TextStyle(
-          fontSize: constraints.maxWidth * 0.012, // Reduced font size
-          color: Colors.white60,
-          decoration: TextDecoration.underline,
-        ),
+            fontSize: 15.sp,
+            color: Colors.white60,
+            decoration: TextDecoration.underline),
       ),
     );
   }
 
   Widget _buildSocialIcon(IconData icon, String url) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6),
-      child: IconButton(
-        icon: FaIcon(icon, color: Colors.white, size: 18),
-        onPressed: () => _launchURL(url),
+    return IconButton(
+      icon: FaIcon(icon, color: Colors.white, size: 18.sp),
+      onPressed: () => _launchURL(url),
+    );
+  }
+}
+
+class SkillCard extends StatelessWidget {
+  final String imagePath;
+  final String skillName;
+
+  const SkillCard({
+    super.key,
+    required this.imagePath,
+    required this.skillName,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 80.w,
+            width: 80.w,
+            child: Image.asset(
+              imagePath,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) =>
+                  const Icon(Icons.broken_image, color: Colors.white54),
+            ),
+          ),
+          SizedBox(height: 25.h),
+          Text(
+            skillName,
+            style: TextStyle(fontSize: 14.sp, color: Colors.white54),
+          ),
+        ],
       ),
     );
   }
@@ -156,77 +179,14 @@ class Skill {
   Skill({required this.imagePath, required this.skillName});
 }
 
-final List<Skill> skills = [
-  Skill(imagePath: 'assets/images/f3.png', skillName: 'Flutter'),
-  Skill(imagePath: 'assets/images/firebase.png', skillName: 'Firebase'),
-  Skill(imagePath: 'assets/images/android4.png', skillName: 'Android'),
-  Skill(imagePath: 'assets/images/ios.png', skillName: 'iOS'),
-  Skill(imagePath: 'assets/images/dart.png', skillName: 'Dart'),
-  Skill(imagePath: 'assets/images/getx.png', skillName: 'GetX'),
-  Skill(imagePath: 'assets/images/bloc.png', skillName: 'BLoC'),
-  Skill(imagePath: 'assets/images/shorebird.jpeg', skillName: 'Shorebird'),
-  Skill(imagePath: 'assets/images/dart.png', skillName: 'Provider'),
+final List<Skill> skillList = [
+  Skill(imagePath: ImageConst.kFlutter, skillName: 'Flutter'),
+  Skill(imagePath: ImageConst.kFirebase, skillName: 'Firebase'),
+  Skill(imagePath: ImageConst.kAndroid, skillName: 'Android'),
+  Skill(imagePath: ImageConst.kIos, skillName: 'iOS'),
+  Skill(imagePath: ImageConst.kDart, skillName: 'Dart'),
+  Skill(imagePath: ImageConst.kGetX, skillName: 'GetX'),
+  Skill(imagePath: ImageConst.kBloc, skillName: 'BLoC'),
+  Skill(imagePath: ImageConst.kShorebird, skillName: 'Shorebird'),
+  Skill(imagePath: ImageConst.kDart, skillName: 'Provider'),
 ];
-
-class SkillCard extends StatefulWidget {
-  final String imagePath;
-  final String skillName;
-
-  const SkillCard(
-      {super.key, required this.imagePath, required this.skillName});
-
-  @override
-  _SkillCardState createState() => _SkillCardState();
-}
-
-class _SkillCardState extends State<SkillCard> {
-  bool isHovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    return MouseRegion(
-      onEnter: (_) => setState(() => isHovered = true),
-      onExit: (_) => setState(() => isHovered = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: isHovered
-              ? Colors.white.withOpacity(0.3) // Hover effect
-              : Colors.white.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: isHovered
-              ? [
-                  BoxShadow(
-                    color: Colors.white.withOpacity(0.5),
-                    blurRadius: 8,
-                    spreadRadius: 2,
-                  )
-                ]
-              : [],
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: Image.asset(widget.imagePath, width: screenWidth * 0.02),
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              widget.skillName,
-              style: TextStyle(
-                fontSize: screenWidth * 0.015,
-                color: Colors.white54,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

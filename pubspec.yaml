@@ -37,6 +37,7 @@ dependencies:
   video_player: ^2.9.3
   font_awesome_flutter: ^10.8.0
   url_launcher: ^6.3.1
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +64,14 @@ flutter:
   assets:
     - assets/videos/
     - assets/images/
+    - assets/images/f3.png
+    - assets/images/firebase.png
+    - assets/images/android4.png
+    - assets/images/ios.png
+    - assets/images/dart.png
+    - assets/images/getx.png
+    - assets/images/bloc.png
+    - assets/images/shorebird.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
