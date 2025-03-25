@@ -1,192 +1,132 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:port/component/dynamic_text_widget.dart';
-import 'package:port/component/text_animated.dart';
-import 'package:port/utility/constants.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:port/pages/about_page.dart';
+import 'package:port/pages/skill_page.dart';
 
-class PortfolioScreen extends StatelessWidget {
+enum PageIndex { home, about, skills, certificates, contact }
+
+class PortfolioScreen extends StatefulWidget {
   const PortfolioScreen({super.key});
 
-  void _launchURL(String url) async {
-    Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
+  @override
+  State<PortfolioScreen> createState() => _PortfolioScreenState();
+}
+
+class _PortfolioScreenState extends State<PortfolioScreen> {
+  PageIndex _currentPage = PageIndex.home;
+  final PageController _pageController = PageController();
+
+  void _onPageChanged(int index) {
+    setState(() => _currentPage = PageIndex.values[index]);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
+      backgroundColor: Colors.black,
+      body: Column(
         children: [
-          Container(
-            width: 250.w,
-            padding: EdgeInsets.all(20.w),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
-              border: Border(
-                  right: BorderSide(color: Colors.white.withOpacity(0.2))),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+          _buildHeader(),
+          Expanded(
+            child: Row(
               children: [
-                SizedBox(height: 80.h),
-                CircleAvatar(
-                  radius: 80.r,
-                  backgroundImage:
-                      const AssetImage('assets/images/profile.jpg'),
-                ),
-                SizedBox(height: 20.h),
-                Text(
-                  'Pratik Makwana',
-                  maxLines: 1,
-                  style: TextStyle(
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white),
-                ),
-                SizedBox(height: 8.h),
-                Text(
-                  'Flutter Developer | UI/UX Enthusiast',
-                  style: TextStyle(fontSize: 14.sp, color: Colors.white70),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 10.h),
-                _buildContactInfo('mailto:flutterdev.pratik@gmail.com',
-                    'flutterdev.pratik@gmail.com'),
-                _buildContactInfo('tel:+919978786060', '+91 9978786060'),
-                _buildContactInfo('tel:+919979896060', '+91 9979896060'),
-                SizedBox(height: 10.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _buildSocialIcon(FontAwesomeIcons.linkedin,
-                        'https://linkedin.com/in/pratikmakwana10'),
-                    _buildSocialIcon(FontAwesomeIcons.github,
-                        'https://github.com/pratikmakwana10'),
-                    _buildSocialIcon(FontAwesomeIcons.medium,
-                        'https://medium.com/@pratikmakwana10'),
-                    _buildSocialIcon(FontAwesomeIcons.youtube,
-                        'https://youtube.com/@pratikmakwana10'),
-                  ],
+                Expanded(
+                  child: GestureDetector(
+                    onVerticalDragEnd: (details) {
+                      if (details.primaryVelocity! < 0) {
+                        _pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease);
+                      } else if (details.primaryVelocity! > 0) {
+                        _pageController.previousPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease);
+                      }
+                    },
+                    child: PageView(
+                      controller: _pageController,
+                      scrollDirection: Axis.vertical,
+                      onPageChanged: _onPageChanged,
+                      children: PageIndex.values
+                          .map((page) => _buildScreen(page))
+                          .toList(),
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.all(30.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const AnimatedText(text: 'My Skills'),
-                  SizedBox(height: 20.h),
-                  GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 5,
-                      crossAxisSpacing: 30.w,
-                      mainAxisSpacing: 30.h,
-                      childAspectRatio: 1.0,
-                    ),
-                    itemCount: skillList.length,
-                    itemBuilder: (context, index) {
-                      return AnimatedSkillCard(
-                        imagePath: skillList[index].imagePath,
-                        skillName: skillList[index].skillName,
-                      );
-                    },
+        ],
+      ),
+      drawer: Container(
+        child: const Text("D"),
+      ),
+    );
+  }
+
+  // 📌 Header with Text Buttons
+  Widget _buildHeader() {
+    return Container(
+      color: Colors.transparent,
+      padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text('Portfolio',
+              style: TextStyle(fontSize: 24.sp, color: Colors.white)),
+          Row(
+            children: PageIndex.values.map((page) {
+              return TextButton(
+                onPressed: () {
+                  setState(() => _currentPage = page);
+                  _pageController.animateToPage(
+                    page.index,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.ease,
+                  );
+                },
+                child: Text(
+                  page.name.toUpperCase(),
+                  style: TextStyle(
+                    color: _currentPage == page
+                        ? const Color.fromARGB(255, 11, 55, 130)
+                        : Colors.white60,
+                    fontSize: 16.sp,
                   ),
-                ],
-              ),
-            ),
-          ),
+                ),
+              );
+            }).toList(),
+          )
         ],
       ),
     );
   }
 
-  Widget _buildContactInfo(String url, String text) {
-    return InkWell(
-      onTap: () => _launchURL(url),
-      child: Text(
-        text,
-        style: TextStyle(
-            fontSize: 15.sp,
-            color: Colors.white60,
-            decoration: TextDecoration.underline),
-      ),
-    );
+  // 📌 Main Content Section
+  Widget _buildScreen(PageIndex page) {
+    switch (page) {
+      case PageIndex.home:
+        return Center(
+            child: Text('Welcome to my Portfolio',
+                style: TextStyle(color: Colors.white, fontSize: 24.sp)));
+      case PageIndex.about:
+        return const AboutMe();
+      case PageIndex.skills:
+        return const SkillPage();
+      case PageIndex.certificates:
+        return Center(
+            child: Text('Certificates',
+                style: TextStyle(color: Colors.white, fontSize: 24.sp)));
+      case PageIndex.contact:
+        return Center(
+            child: Text('Contact Me',
+                style: TextStyle(color: Colors.white, fontSize: 24.sp)));
+    }
   }
-
-  Widget _buildSocialIcon(IconData icon, String url) {
-    return IconButton(
-      icon: FaIcon(icon, color: Colors.white, size: 18.sp),
-      onPressed: () => _launchURL(url),
-    );
-  }
-}
-
-class SkillCard extends StatelessWidget {
-  final String imagePath;
-  final String skillName;
-
-  const SkillCard({
-    super.key,
-    required this.imagePath,
-    required this.skillName,
-  });
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8.r),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 80.w,
-            width: 80.w,
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) =>
-                  const Icon(Icons.broken_image, color: Colors.white54),
-            ),
-          ),
-          SizedBox(height: 25.h),
-          Text(
-            skillName,
-            style: TextStyle(fontSize: 14.sp, color: Colors.white54),
-          ),
-        ],
-      ),
-    );
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 }
-
-class Skill {
-  final String imagePath;
-  final String skillName;
-
-  Skill({required this.imagePath, required this.skillName});
-}
-
-final List<Skill> skillList = [
-  Skill(imagePath: ImageConst.kFlutter, skillName: 'Flutter'),
-  Skill(imagePath: ImageConst.kFirebase, skillName: 'Firebase'),
-  Skill(imagePath: ImageConst.kAndroid, skillName: 'Android'),
-  Skill(imagePath: ImageConst.kIos, skillName: 'iOS'),
-  Skill(imagePath: ImageConst.kDart, skillName: 'Dart'),
-  Skill(imagePath: ImageConst.kGetX, skillName: 'GetX'),
-  Skill(imagePath: ImageConst.kBloc, skillName: 'BLoC'),
-  Skill(imagePath: ImageConst.kShorebird, skillName: 'Shorebird'),
-  Skill(imagePath: ImageConst.kDart, skillName: 'Provider'),
-];
