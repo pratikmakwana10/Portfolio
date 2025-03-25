@@ -10,8 +10,8 @@ class ImageConst {
   /// SKILL IMAGE   //////////////////////////////////////////////////////////////////
 
   static const String kFlutter = 'assets/images/f3.png';
-  static const String kFirebase = 'assets/images/firebase.png';
-  static const String kAndroid = 'assets/images/android4.png';
+  static const String kFirebase = 'assets/images/Firebase2.png';
+  static const String kAndroid = 'assets/images/android11.png';
   static const String kIos = 'assets/images/ios.png';
   static const String kDart = 'assets/images/dart.png';
   static const String kGetX = 'assets/images/getx.png';

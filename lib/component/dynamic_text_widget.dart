@@ -14,10 +14,10 @@ class AnimatedSkillCard extends StatefulWidget {
   });
 
   @override
-  _AnimatedSkillCardState createState() => _AnimatedSkillCardState();
+  AnimatedSkillCardState createState() => AnimatedSkillCardState();
 }
 
-class _AnimatedSkillCardState extends State<AnimatedSkillCard> {
+class AnimatedSkillCardState extends State<AnimatedSkillCard> {
   late double _leftPosition;
   late Color _textColor;
 

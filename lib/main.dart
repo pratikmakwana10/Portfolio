@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           title: 'Portfolio',
           theme: ThemeData(
             brightness: Brightness.dark,
-            fontFamily: 'Poppins',
+            fontFamily: 'Montserrat',
           ),
           home: const PortfolioScreen(),
         );

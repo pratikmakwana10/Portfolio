@@ -14,10 +14,10 @@ class AnimatedText extends StatefulWidget {
   });
 
   @override
-  _AnimatedTextState createState() => _AnimatedTextState();
+  AnimatedTextState createState() => AnimatedTextState();
 }
 
-class _AnimatedTextState extends State<AnimatedText>
+class AnimatedTextState extends State<AnimatedText>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;

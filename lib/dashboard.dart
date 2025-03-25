@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:port/component/text_animated.dart';
 import 'package:port/pages/about_page.dart';
 import 'package:port/pages/certi_page.dart';
 import 'package:port/pages/skill_page.dart';
@@ -67,13 +68,19 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   // 📌 Header with Text Buttons
   Widget _buildHeader() {
     return Container(
-      color: Colors.grey.shade900,
+      // color: Colors.black87,
       padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Pratik Makwana',
-              style: TextStyle(fontSize: 24.sp, color: Colors.white)),
+          const AnimatedText(
+            text: 'Pratik Makwana',fontSize: 25,duration: Duration(seconds: 3),
+            // style: TextStyle(
+            //     fontSize: 24.sp,
+            //     color: Colors.white70,
+            //     wordSpacing: 10,
+            //     fontWeight: FontWeight.bold)),
+          ),
           Row(
             children: PageIndex.values.map((page) {
               return TextButton(
@@ -89,8 +96,9 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                   capitalizeFirstLetter(page.name),
                   style: TextStyle(
                     color: _currentPage == page
-                        ? const Color.fromARGB(255, 11, 55, 130)
-                        : Colors.white70,
+                        ? const Color.fromARGB(255, 67, 103, 232)
+                        : Colors.white54,
+                    fontWeight: FontWeight.bold,
                     fontSize: 16.sp,
                   ),
                 ),
@@ -115,7 +123,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       case PageIndex.about:
         return const AboutMe();
       case PageIndex.skills:
-        return const SkillsScreen();
+        return SkillPage();
       case PageIndex.certificates:
         return CertificatePage();
       case PageIndex.contact:

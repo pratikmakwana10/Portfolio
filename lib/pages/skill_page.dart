@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:port/component/dynamic_text_widget.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:port/component/skill.dart';
 import 'package:port/component/text_animated.dart';
 import 'package:port/utility/constants.dart';
 
 class SkillPage extends StatelessWidget {
-  const SkillPage({super.key});
+  SkillPage({super.key});
   final int _currentIndex = 0;
 
   @override
@@ -29,14 +30,14 @@ class SkillPage extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 5,
-                    crossAxisSpacing: 30.w,
-                    mainAxisSpacing: 30.h,
-                    childAspectRatio: 1.0,
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 100.w,
+                    mainAxisSpacing: 70.h,
+                    childAspectRatio: 2,
                   ),
                   itemCount: skillList.length,
                   itemBuilder: (context, index) {
-                    return AnimatedSkillCard(
+                    return SkillCard(
                       imagePath: skillList[index].imagePath,
                       skillName: skillList[index].skillName,
                     );
@@ -52,76 +53,59 @@ class SkillPage extends StatelessWidget {
       ),
     );
   }
-}
 
-class Skill {
-  final String imagePath;
-  final String skillName;
-
-  Skill({required this.imagePath, required this.skillName});
-}
-
-final List<Skill> skillList = [
-  Skill(imagePath: ImageConst.kFlutter, skillName: 'Flutter'),
-  Skill(imagePath: ImageConst.kDart, skillName: 'Dart'),
-  Skill(imagePath: ImageConst.kFirebase, skillName: 'Firebase'),
-  Skill(imagePath: ImageConst.kAndroid, skillName: 'Android'),
-  Skill(imagePath: ImageConst.kIos, skillName: 'iOS'),
-  Skill(imagePath: ImageConst.kGetX, skillName: 'GetX'),
-  Skill(imagePath: ImageConst.kBloc, skillName: 'BLoC'),
-  Skill(imagePath: ImageConst.kDart, skillName: 'Provider'),
-  Skill(imagePath: ImageConst.kPostGres, skillName: 'PostGreSQL'),
-  Skill(imagePath: ImageConst.kFigma, skillName: 'Figma'),
-  Skill(imagePath: ImageConst.kShorebird, skillName: 'Shorebird'),
-];
-
-class SkillsScreen extends StatelessWidget {
-  const SkillsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(20.w),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 5,
-          crossAxisSpacing: 20.w,
-          mainAxisSpacing: 20.h,
-          childAspectRatio: 1.5,
-        ),
-        itemCount: skillList.length,
-        itemBuilder: (context, index) {
-          return SkillCard(skill: skillList[index]);
-        },
-      ),
-    );
-  }
+  final List<Skill> skillList = [
+    Skill(imagePath: ImageConst.kFlutter, skillName: 'Flutter'),
+    Skill(imagePath: ImageConst.kDart, skillName: 'Dart'),
+    Skill(imagePath: ImageConst.kFirebase, skillName: 'Firebase'),
+    Skill(imagePath: ImageConst.kAndroid, skillName: 'Android'),
+    Skill(imagePath: ImageConst.kIos, skillName: 'iOS'),
+    Skill(imagePath: ImageConst.kGetX, skillName: 'GetX'),
+    Skill(imagePath: ImageConst.kBloc, skillName: 'BLoC'),
+    Skill(imagePath: ImageConst.kDart, skillName: 'Provider'),
+    Skill(imagePath: ImageConst.kPostGres, skillName: 'PostGreSQL'),
+    Skill(imagePath: ImageConst.kFigma, skillName: 'Figma'),
+    Skill(imagePath: ImageConst.kShorebird, skillName: 'Shorebird'),
+  ];
 }
 
 class SkillCard extends StatelessWidget {
-  final Skill skill;
+  final String imagePath;
+  final String skillName;
 
-  const SkillCard({super.key, required this.skill});
+  const SkillCard({
+    super.key,
+    required this.imagePath,
+    required this.skillName,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(5.r),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(16.r),
+        shape: BoxShape.rectangle,
+        color: Colors.grey.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(90.r),
+        border: GradientBoxBorder(
+          gradient: LinearGradient(
+            stops: const [0.3, 1.0],
+            colors: [Colors.grey.shade900, Colors.grey.shade600],
+            begin: Alignment.center,
+            transform: const GradientRotation(50),
+            end: Alignment.topRight,
+          ),
+          width: 2.r,
+        ),
       ),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              skill.imagePath,
-              height: 70.w,
-            ),
+            Image.asset(imagePath, height: 70.w),
             SizedBox(height: 20.h),
             AnimatedText(
-              // style: TextStyle(color: Colors.white, fontSize: 16.sp),
-              text: skill.skillName,
+              text: skillName,
             ),
           ],
         ),
