@@ -63,14 +63,16 @@ class Skill {
 
 final List<Skill> skillList = [
   Skill(imagePath: ImageConst.kFlutter, skillName: 'Flutter'),
+  Skill(imagePath: ImageConst.kDart, skillName: 'Dart'),
   Skill(imagePath: ImageConst.kFirebase, skillName: 'Firebase'),
   Skill(imagePath: ImageConst.kAndroid, skillName: 'Android'),
   Skill(imagePath: ImageConst.kIos, skillName: 'iOS'),
-  Skill(imagePath: ImageConst.kDart, skillName: 'Dart'),
   Skill(imagePath: ImageConst.kGetX, skillName: 'GetX'),
   Skill(imagePath: ImageConst.kBloc, skillName: 'BLoC'),
-  Skill(imagePath: ImageConst.kShorebird, skillName: 'Shorebird'),
   Skill(imagePath: ImageConst.kDart, skillName: 'Provider'),
+  Skill(imagePath: ImageConst.kPostGres, skillName: 'PostGreSQL'),
+  Skill(imagePath: ImageConst.kFigma, skillName: 'Figma'),
+  Skill(imagePath: ImageConst.kShorebird, skillName: 'Shorebird'),
 ];
 
 class SkillsScreen extends StatelessWidget {
@@ -82,10 +84,10 @@ class SkillsScreen extends StatelessWidget {
       padding: EdgeInsets.all(20.w),
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 5,
           crossAxisSpacing: 20.w,
           mainAxisSpacing: 20.h,
-          childAspectRatio: 1,
+          childAspectRatio: 1.5,
         ),
         itemCount: skillList.length,
         itemBuilder: (context, index) {
@@ -108,16 +110,21 @@ class SkillCard extends StatelessWidget {
         color: Colors.white.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16.r),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(skill.imagePath, height: 60.w, width: 60.w),
-          SizedBox(height: 10.h),
-          Text(
-            skill.skillName,
-            style: TextStyle(color: Colors.white, fontSize: 16.sp),
-          ),
-        ],
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              skill.imagePath,
+              height: 70.w,
+            ),
+            SizedBox(height: 20.h),
+            AnimatedText(
+              // style: TextStyle(color: Colors.white, fontSize: 16.sp),
+              text: skill.skillName,
+            ),
+          ],
+        ),
       ),
     );
   }

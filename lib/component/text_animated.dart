@@ -3,12 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AnimatedText extends StatefulWidget {
   final String text;
+  final double? fontSize;
   final Duration duration;
 
   const AnimatedText({
     super.key,
     required this.text,
-    this.duration = const Duration(seconds: 2),
+    this.fontSize,
+    this.duration = const Duration(seconds: 3),
   });
 
   @override
@@ -47,7 +49,8 @@ class _AnimatedTextState extends State<AnimatedText>
       child: Text(
         widget.text,
         style: TextStyle(
-          fontSize: 40.sp,
+          fontSize:
+              widget.fontSize ?? 16.sp, // Default to 16.sp if not provided
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),

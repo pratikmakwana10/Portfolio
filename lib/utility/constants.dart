@@ -18,4 +18,6 @@ class ImageConst {
   static const String kBloc = 'assets/images/bloc.png';
   static const String kShorebird = 'assets/images/shorebird.jpeg';
   static const String kProvider = 'assets/images/dart.png';
+  static const String kPostGres = 'assets/images/sql.png';
+  static const String kFigma = 'assets/images/figma.png';
 }
