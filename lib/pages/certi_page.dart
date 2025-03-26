@@ -29,16 +29,19 @@ class CertificatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Adjust column count based on screen width
+    int crossAxisCount = MediaQuery.of(context).size.width < 600 ? 1 : 3;
+
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 50.0.h, horizontal: 20.w),
+      padding: EdgeInsets.symmetric(vertical: 30.0.h, horizontal: 20.w),
       child: Center(
         child: GridView.builder(
           padding: EdgeInsets.all(16.w),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
+            crossAxisCount: crossAxisCount,
             crossAxisSpacing: 16.w,
             mainAxisSpacing: 16.h,
-            childAspectRatio: 1.18,
+            childAspectRatio: 0.85,
           ),
           itemCount: certificates.length,
           itemBuilder: (context, index) {
@@ -59,7 +62,9 @@ class CertificatePage extends StatelessWidget {
                       ),
                       child: Image.asset(
                         certificates[index]["image"]!,
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
+                        height: 140.h,
+                        width: double.infinity,
                       ),
                     ),
                     Padding(
@@ -67,11 +72,7 @@ class CertificatePage extends StatelessWidget {
                       child: Center(
                         child: AnimatedText(
                           text: certificates[index]["title"]!,
-                          // style: TextStyle(
-                          //   fontSize: 14.sp,
-                          //   fontWeight: FontWeight.bold,
-                          //   color: Colors.white,
-                          // ),
+                          fontSize: 14.sp,
                         ),
                       ),
                     ),

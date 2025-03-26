@@ -20,4 +20,19 @@ class ImageConst {
   static const String kProvider = 'assets/images/dart.png';
   static const String kPostGres = 'assets/images/sql.png';
   static const String kFigma = 'assets/images/figma.png';
+  static const String kCodemagic = 'assets/images/codemagic.png';
+  static const String kJira = 'assets/images/jira.png';
+  static const String xSetting = 'assets/images/xbridge/xbridge_settings.png';
+  static const String xCalender = 'assets/images/xbridge/xbridge_calender.png';
+  static const String xDashboard =
+      'assets/images/xbridge/xbridge_dashboard.png';
+  static const String xSCR =
+      'assets/images/xbridge/xbridge_service_call_report.png';
+  static const String xSCR2 =
+      'assets/images/xbridge/xbridge_service_report.png';
+  static const String xTaskDetail =
+      'assets/images/xbridge/xbridge_task_details.png';
+  static const String xTasks = 'assets/images/xbridge/xbridge_tasks.png';
+  static const String xVideoTask =
+      'assets/images/xbridge/xbridge_video_chat.png';
 }

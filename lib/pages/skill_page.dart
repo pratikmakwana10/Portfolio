@@ -11,18 +11,18 @@ class SkillPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Responsive column count
+    int crossAxisCount = MediaQuery.of(context).size.width < 600 ? 2 : 4;
+
     return SingleChildScrollView(
-      padding: EdgeInsets.all(30.w),
+      padding: EdgeInsets.all(20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AnimatedText(
             key: ValueKey(_currentIndex),
-            text: _currentIndex == 0
-                ? 'My Skills'
-                : _currentIndex == 1
-                    ? 'Projects'
-                    : 'Certificates',
+            text: _currentIndex == 0 ? 'My Skills' : 'Projects',
+            fontSize: 24.sp,
           ),
           SizedBox(height: 20.h),
           _currentIndex == 0
@@ -30,10 +30,10 @@ class SkillPage extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    crossAxisSpacing: 100.w,
-                    mainAxisSpacing: 70.h,
-                    childAspectRatio: 2,
+                    crossAxisCount: crossAxisCount,
+                    crossAxisSpacing: 20.w,
+                    mainAxisSpacing: 20.h,
+                    childAspectRatio: 1.5,
                   ),
                   itemCount: skillList.length,
                   itemBuilder: (context, index) {
@@ -47,6 +47,7 @@ class SkillPage extends StatelessWidget {
                   child: AnimatedText(
                     key: ValueKey('text-$_currentIndex'),
                     text: _currentIndex == 1 ? 'Projects' : 'Certificates',
+                    fontSize: 24.sp,
                   ),
                 ),
         ],
@@ -66,6 +67,7 @@ class SkillPage extends StatelessWidget {
     Skill(imagePath: ImageConst.kPostGres, skillName: 'PostGreSQL'),
     Skill(imagePath: ImageConst.kFigma, skillName: 'Figma'),
     Skill(imagePath: ImageConst.kShorebird, skillName: 'Shorebird'),
+    Skill(imagePath: ImageConst.kCodemagic, skillName: 'Codemagic'),
   ];
 }
 
@@ -82,17 +84,17 @@ class SkillCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5.r),
+      padding: EdgeInsets.all(10.r),
       decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
         color: Colors.grey.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(90.r),
+        borderRadius: BorderRadius.circular(16.r),
         border: GradientBoxBorder(
           gradient: LinearGradient(
-            stops: const [0.3, 1.0],
-            colors: [Colors.grey.shade900, Colors.grey.shade600],
-            begin: Alignment.center,
-            transform: const GradientRotation(50),
+            colors: [
+              Colors.grey.shade900,
+              const Color(0xFF12D6FF),
+            ],
+            begin: Alignment.centerLeft,
             end: Alignment.topRight,
           ),
           width: 2.r,
@@ -102,11 +104,13 @@ class SkillCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(imagePath, height: 70.w),
-            SizedBox(height: 20.h),
+            Image.asset(imagePath,
+                height: ScreenUtil().screenWidth < 600 ? 40.w : 60.w),
+            SizedBox(height: 10.h),
             AnimatedText(
               text: skillName,
-            ),
+              fontSize: ScreenUtil().screenWidth < 600 ? 7.sp : 16.sp,
+            )
           ],
         ),
       ),
